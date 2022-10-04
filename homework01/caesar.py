@@ -1,5 +1,6 @@
 import typing as tp
 
+
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     for i in plaintext:
@@ -31,4 +32,3 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     best_shift = 0
     # PUT YOUR CODE HERE
     return best_shift
-
