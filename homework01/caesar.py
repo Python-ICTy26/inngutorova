@@ -7,7 +7,9 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     for i in plaintext:
         if (ord("A") <= ord(i) <= ord("Z") - shift) or (ord("a") <= ord(i) <= ord("z") - shift):
             ciphertext += chr(ord(i) + shift)
-        elif (ord("Z") - shift + 1 <= ord(i) <= ord("Z")) or (ord("z") - shift + 1 <= ord(i) <= ord("z")):
+        elif (ord("Z") - shift + 1 <= ord(i) <= ord("Z")) or (
+            ord("z") - shift + 1 <= ord(i) <= ord("z")
+        ):
             ciphertext += chr(ord(i) - 26 + shift)
         else:
             ciphertext += i
