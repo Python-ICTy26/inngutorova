@@ -210,7 +210,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     if N > 81:
         N = 81
     empty: tp.List[tp.List[str]] = [["." for j in range(9)] for i in range(9)]
-    grid = solve(empty)
+    grid: tp.List[tp.List[str]] = solve(empty)
     count = 0
     while count != 81 - N:
         n = randint(0, 8)
