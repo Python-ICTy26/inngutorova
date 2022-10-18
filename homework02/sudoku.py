@@ -44,7 +44,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    matrix = []
+    matrix: tp.List[tp.List[T]] = []
     for i in range(n):
         matrix.append([])
         for j in range(n):
@@ -117,6 +117,7 @@ def find_empty_positions(
             if grid[i][j] == ".":
                 pos = (i, j)
                 return pos
+    return None
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -154,18 +155,18 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    gr: tp.Optional[tp.List[tp.List[str]]] = grid
 
-    pos = find_empty_positions(gr)
+    pos = find_empty_positions(grid)
     if not pos:
-        return gr
+        return grid
     else:
-        for i in find_possible_values(gr, pos):
-            gr[pos[0]][pos[1]] = str(i)
-            if solve(gr):
-                return gr
+        for i in find_possible_values(grid, pos):
+            grid[pos[0]][pos[1]] = str(i)
+            if solve(grid):
+                return grid
             else:
-                gr[pos[0]][pos[1]] = "."
+                grid[pos[0]][pos[1]] = "."
+    return None
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
