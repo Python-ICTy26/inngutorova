@@ -159,13 +159,12 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     pos = find_empty_positions(grid)
     if not pos:
         return grid
-    else:
-        for i in find_possible_values(grid, pos):
-            grid[pos[0]][pos[1]] = str(i)
-            if solve(grid):
-                return grid
-            else:
-                grid[pos[0]][pos[1]] = "."
+    for i in find_possible_values(grid, pos):
+        grid[pos[0]][pos[1]] = i
+        solved = solve(grid)
+        if solved:
+            return solved
+        grid[pos[0]][pos[1]] = "."
     return None
 
 
