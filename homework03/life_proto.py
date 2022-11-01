@@ -128,14 +128,14 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        a = cell[0]
-        b = cell[1]
+        a = cell[1]
+        b = cell[0]
         out: Cells = []
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if not (i == 0 and j == 0):
                     if 0 <= a + j < len(self.grid[0]) and 0 <= b + i < len(self.grid):
-                        out.append(self.grid[b + i][a + j])
+                        out.append(self.grid[b+i][a+j])
         return out
 
     def get_next_generation(self) -> Grid:
@@ -154,8 +154,8 @@ class GameOfLife:
                 out[i].append(0)
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
-                cell: Cell = (j, i)
+                cell: Cell = (i, j)
                 sum = self.get_neighbours(cell).count(1)
-                if (self.grid[i][j] and (sum == 2 or sum == 3)) or (not self.grid[i][j] and sum == 3):
+                if self.grid[i][j] and sum == 2 or sum == 3:
                     out[i][j] = 1
         return out

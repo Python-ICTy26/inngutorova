@@ -43,8 +43,8 @@ class GameOfLife:
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
-        a = cell[0]
-        b = cell[1]
+        a = cell[1]
+        b = cell[0]
         out: Cells = []
         for i in range(-1, 2):
             for j in range(-1, 2):
@@ -61,9 +61,9 @@ class GameOfLife:
                 out[i].append(0)
         for i in range(len(self.curr_generation)):
             for j in range(len(self.curr_generation[0])):
-                cell: Cell = (j, i)
+                cell: Cell = (i,j)
                 sum = self.get_neighbours(cell).count(1)
-                if (self.curr_generation[i][j] and (sum == 2 or sum == 3)) or (not self.curr_generation[i][j] and sum == 3):
+                if self.curr_generation[i][j] and sum == 2 or sum == 3:
                     out[i][j] = 1
         return out
 
@@ -82,7 +82,7 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        if self.generations > self.max_generations:
+        if self.generations >= self.max_generations:
             return True
         else:
             return False
