@@ -125,4 +125,3 @@ class GameOfLife:
                 file.write(str(self.curr_generation[i][j]))
             file.write('\n')
         file.close()
-        pass
