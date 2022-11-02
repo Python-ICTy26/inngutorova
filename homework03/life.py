@@ -12,10 +12,10 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-            self,
-            size: tp.Tuple[int, int],
-            randomize: bool = True,
-            max_generations: tp.Optional[float] = float("inf"),
+        self,
+        size: tp.Tuple[int, int],
+        randomize: bool = True,
+        max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -49,7 +49,9 @@ class GameOfLife:
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if not (i == 0 and j == 0):
-                    if 0 <= a + j < len(self.curr_generation[0]) and 0 <= b + i < len(self.curr_generation):
+                    if 0 <= a + j < len(self.curr_generation[0]) and 0 <= b + i < len(
+                        self.curr_generation
+                    ):
                         out.append(self.curr_generation[b + i][a + j])
         return out
 
@@ -61,7 +63,7 @@ class GameOfLife:
                 out[i].append(0)
         for i in range(len(self.curr_generation)):
             for j in range(len(self.curr_generation[0])):
-                cell: Cell = (i,j)
+                cell: Cell = (i, j)
                 sum = self.get_neighbours(cell).count(1)
                 if self.curr_generation[i][j] and sum == 2 or sum == 3:
                     out[i][j] = 1
@@ -75,7 +77,6 @@ class GameOfLife:
             self.prev_generation = self.curr_generation
             self.curr_generation = self.get_next_generation()
             self.generations += 1
-
 
     @property
     def is_max_generations_exceeded(self) -> bool:
@@ -106,11 +107,11 @@ class GameOfLife:
         whole = file.readlines()
         grid = []
         for i in range(len(whole)):
-            if whole[i]!='\n':
-                whole[i]=whole[i][:-1]
-                row=[int(n) for n in list(whole[i])]
+            if whole[i] != "\n":
+                whole[i] = whole[i][:-1]
+                row = [int(n) for n in list(whole[i])]
                 grid.append(row)
-        game = GameOfLife((len(grid),len(grid[0])))
+        game = GameOfLife((len(grid), len(grid[0])))
         game.curr_generation = grid
         file.close()
         return game
@@ -123,5 +124,5 @@ class GameOfLife:
         for i in range(len(self.curr_generation)):
             for j in range(len(self.curr_generation[0])):
                 file.write(str(self.curr_generation[i][j]))
-            file.write('\n')
+            file.write("\n")
         file.close()

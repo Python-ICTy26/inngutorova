@@ -11,8 +11,7 @@ class Console(UI):
 
     def draw_borders(self, screen) -> None:
         """Отобразить рамку."""
-        screen.border('|', '|', '-', '-', '+', '+', '+', '+')
-
+        screen.border("|", "|", "-", "-", "+", "+", "+", "+")
 
     def draw_grid(self, screen) -> None:
         """Отобразить состояние клеток."""
@@ -20,13 +19,13 @@ class Console(UI):
             for j in range(self.life.cols):
                 screen.move(1 + i, 1 + j)
                 if self.life.curr_generation[i][j] == 1:
-                    screen.addch('*')
+                    screen.addch("*")
                 else:
-                    screen.addch(' ')
+                    screen.addch(" ")
 
     def run(self) -> None:
         screen = curses.initscr()
-        curses.resize_term(self.life.rows+2,self.life.cols+2)
+        curses.resize_term(self.life.rows + 2, self.life.cols + 2)
         running = True
         while running:
             self.draw_borders(screen)
