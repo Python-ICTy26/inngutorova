@@ -3,7 +3,7 @@ import time
 import typing as tp
 
 import pygame
-from pygame.locals import *
+from pygame import QUIT
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
