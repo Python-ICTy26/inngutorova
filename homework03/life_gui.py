@@ -2,10 +2,9 @@ import random
 import time
 
 import pygame
+from life import GameOfLife
 from pygame import QUIT
 from pygame.locals import *
-
-from life import GameOfLife
 from ui import UI
 
 
