@@ -9,20 +9,14 @@ from pyvcs.objects import hash_object
 from pyvcs.refs import get_ref, is_detached, resolve_head, update_ref
 
 
-def write_tree(
-    gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str = ""
-) -> str:
+def write_tree(gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str = "") -> str:
     tree = b""
     for i in index:
         path = i.name.split("/")
         if "/" in i.name:
             tree += b"40000 "
             sha = hash_object(
-                oct(i.mode)[2:].encode()
-                + b" "
-                + "/".join(path[1:]).encode()
-                + b"\0"
-                + i.sha1,
+                oct(i.mode)[2:].encode() + b" " + "/".join(path[1:]).encode() + b"\0" + i.sha1,
                 "tree",
                 True,
             )

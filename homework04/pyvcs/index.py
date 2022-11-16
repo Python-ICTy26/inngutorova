@@ -83,9 +83,7 @@ def ls_files(gitdir: pathlib.Path, details: bool = False) -> None:
             print(entry.name)
 
 
-def update_index(
-    gitdir: pathlib.Path, paths: tp.List[pathlib.Path], write: bool = True
-) -> None:
+def update_index(gitdir: pathlib.Path, paths: tp.List[pathlib.Path], write: bool = True) -> None:
     if (gitdir / "index").exists():
         files = read_index(gitdir)
     else:
