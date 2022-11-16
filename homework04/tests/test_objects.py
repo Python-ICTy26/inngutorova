@@ -1,4 +1,4 @@
-import import io
+import io
 import pathlib
 import stat
 import unittest
