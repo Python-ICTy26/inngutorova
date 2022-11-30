@@ -54,9 +54,7 @@ class Session:
         count = 0
         while True:
             try:
-                response = requests.post(
-                    self.base_url + url, data=kwargs, timeout=self.timeout
-                )
+                response = requests.post(self.base_url + url, data=kwargs, timeout=self.timeout)
                 response.raise_for_status()
                 return response
             except requests.exceptions.HTTPError:
