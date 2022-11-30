@@ -5,7 +5,7 @@ import typing as tp
 
 import requests
 
-from vkapi import config, session, Session
+from vkapi import Session, config, session
 from vkapi.config import VK_CONFIG
 from vkapi.exceptions import APIError
 
@@ -19,7 +19,10 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int,
+    count: int = 5000,
+    offset: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
