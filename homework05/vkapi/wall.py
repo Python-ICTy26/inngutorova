@@ -9,7 +9,6 @@ import requests
 from pandas import json_normalize
 from vkapi import config, session
 from vkapi.config import VK_CONFIG
-from vkapi.exceptions import APIError
 
 
 def get_posts_2500(
