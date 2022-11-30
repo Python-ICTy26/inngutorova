@@ -69,7 +69,7 @@ def get_wall_execute(
     :param progress: Callback для отображения прогресса.
     """
     count = math.ceil(count / 2500)
-    response = []
+    response: tp.List[str] = []
     for i in range(0, count):
         response += get_posts_2500(
             owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
