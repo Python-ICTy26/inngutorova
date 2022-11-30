@@ -4,7 +4,6 @@ import time
 import typing as tp
 
 import requests
-
 from vkapi import Session, config, session
 from vkapi.config import VK_CONFIG
 from vkapi.exceptions import APIError

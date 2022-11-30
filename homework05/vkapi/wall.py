@@ -7,7 +7,6 @@ from string import Template
 import pandas as pd
 import requests
 from pandas import json_normalize
-
 from vkapi import config, session
 from vkapi.config import VK_CONFIG
 from vkapi.exceptions import APIError
