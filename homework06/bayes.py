@@ -27,17 +27,12 @@ class NaiveBayesClassifier:
             max_prob_type = None
             max_prob = -math.inf
             for type in self.types:
-                prob = math.log(
-                    self.types_enters[type] / sum(self.types_enters.values())
-                )
+                prob = math.log(self.types_enters[type] / sum(self.types_enters.values()))
                 for word in texts[i].split():
                     prob += math.log(
                         (self.words_enters[type][word] + self.alpha)
-                        / (
-                            sum(self.words_enters[type].values())
-                            + self.alpha * self.words_count
-                        )
-                    )  # вероятность слова в типе как количество встреч слова в типе / количество всех встреч слов в типе
+                        / (sum(self.words_enters[type].values()) + self.alpha * self.words_count)
+                    )
                 if prob > max_prob:
                     max_prob = prob
                     max_prob_type = type
