@@ -34,8 +34,7 @@ def update_news():
     news = get_news("https://news.ycombinator.com/newest")
     for new in news:
         isin = len(
-            s.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
-        )
+            s.query(News).filter(News.author == new["author"], News.title == new["title"]).all())
         if not isin:
             s.add(
                 News(
