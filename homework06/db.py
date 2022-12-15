@@ -2,12 +2,12 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-base = declarative_base()
+Base = declarative_base()
 engine = create_engine("sqlite:///news.db")
 session = sessionmaker(bind=engine)
 
 
-class News(base):
+class News(Base): # type: ignore
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
     title = Column(String)
@@ -18,4 +18,4 @@ class News(base):
     label = Column(String)
 
 
-base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
