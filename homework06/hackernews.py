@@ -1,8 +1,10 @@
-from bayes import NaiveBayesClassifier
+from urllib.parse import parse_qs
+
 from bottle import redirect, request, route, run, template
+
+from bayes import NaiveBayesClassifier
 from db import News, session
 from scraputils import get_news
-from urllib.parse import parse_qs
 
 
 @route("/")
@@ -14,14 +16,16 @@ def root():
 def news_list():
     s = session()
     rows = s.query(News).filter(News.label == None).all()
-    return template('news_template', rows=rows)
+    return template("news_template", rows=rows)
 
 
 @route("/add_label/")
 def add_label():
     args = parse_qs(request.query_string)
     s = session()
-    s.query(News).filter(News.id == int(args['id'][0])).update({'label': str(args['label'][0])})
+    s.query(News).filter(News.id == int(args["id"][0])).update(
+        {"label": str(args["label"][0])}
+    )
     s.commit()
     redirect("/news")
 
@@ -31,10 +35,21 @@ def update_news():
     s = session()
     news = get_news("https://news.ycombinator.com/newest")
     for new in news:
-        isin = len(s.query(News).filter(News.author == new["author"], News.title == new["title"]).all())
+        isin = len(
+            s.query(News)
+            .filter(News.author == new["author"], News.title == new["title"])
+            .all()
+        )
         if not isin:
-            s.add(News(title=new["title"], author=new["author"], points=new["points"], comments=new["comments"],
-                       url=new["url"]))
+            s.add(
+                News(
+                    title=new["title"],
+                    author=new["author"],
+                    points=new["points"],
+                    comments=new["comments"],
+                    url=new["url"],
+                )
+            )
     s.commit()
     redirect("/news")
 
@@ -63,13 +78,13 @@ def recommendations():
     labels = model.predict(titles)
 
     classified_news = []
-    for label in ('good', 'maybe', 'never'):
+    for label in ("good", "maybe", "never"):
         ind = 0
         for title_label in labels:
             if title_label == label:
                 classified_news.append(not_labeled[ind])
             ind += 1
-    return template('news_template', rows=classified_news)
+    return template("news_template", rows=classified_news)
 
 
 if __name__ == "__main__":

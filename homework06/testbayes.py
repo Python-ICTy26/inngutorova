@@ -1,21 +1,22 @@
-from bayes import NaiveBayesClassifier
 from string import punctuation
+
+from bayes import NaiveBayesClassifier
 
 
 def clean_data(texts):
     texts = [i.lower() for i in texts]
-    texts = [i.replace('\n', ' ').replace('\r', ' ') for i in texts]
+    texts = [i.replace("\n", " ").replace("\r", " ") for i in texts]
     texts = [i.split() for i in texts]
     texts = [[word for word in i if word not in punctuation] for i in texts]
-    texts = [' '.join(i) for i in texts]
+    texts = [" ".join(i) for i in texts]
     return texts
 
 
 def split_data(X, y):
-    X_train = X[:int(len(X) * 0.7)]
-    y_train = y[:int(len(y) * 0.7)]
-    X_test = X[int(len(X) * 0.7):]
-    y_test = y[int(len(y) * 0.7):]
+    X_train = X[: int(len(X) * 0.7)]
+    y_train = y[: int(len(y) * 0.7)]
+    X_test = X[int(len(X) * 0.7) :]
+    y_test = y[int(len(y) * 0.7) :]
     return X_train, y_train, X_test, y_test
 
 

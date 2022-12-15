@@ -12,21 +12,28 @@ def extract_news(parser):
         subline = sublines[i]
         title = titleline.find("a").text
         author = subline.find("a", {"class": "hnuser"}).text
-        url = titleline.find("a")['href']
+        url = titleline.find("a")["href"]
         if subline.findAll("a")[-1].text == "discuss":
             comments = 0
         else:
             line = subline.findAll("a")[-1].text
             comments = int(line.split()[0])
         points = subline.find("span", {"class": "score"}).text
-        news_list.append({'title': title, 'author': author, 'url': url, 'comments': comments, 'points': points})
-
+        news_list.append(
+            {
+                "title": title,
+                "author": author,
+                "url": url,
+                "comments": comments,
+                "points": points,
+            }
+        )
 
     return news_list
 
 
 def extract_next_page(parser):
-    next_page = parser.find('a', {'class': 'morelink'})['href']
+    next_page = parser.find("a", {"class": "morelink"})["href"]
     print(next_page)
     return next_page
 
