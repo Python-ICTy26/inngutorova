@@ -1,23 +1,45 @@
-import requests
+import requests  # type: ignore
 from bs4 import BeautifulSoup
 
 
 def extract_news(parser):
-    """ Extract news from a given web page """
     news_list = []
+    titles = parser.table.findAll("span", {"class": "titleline"})
+    sublines = parser.findAll("td", {"class": "subtext"})
 
-    # PUT YOUR CODE HERE
+    for i in range(len(titles)):
+        titleline = titles[i]
+        subline = sublines[i]
+        title = titleline.find("a").text
+        author = subline.find("a", {"class": "hnuser"}).text
+        url = titleline.find("a")["href"]
+        if subline.findAll("a")[-1].text == "discuss":
+            comments = 0
+        else:
+            line = subline.findAll("a")[-1].text
+            comments = int(line.split()[0])
+        points = subline.find("span", {"class": "score"}).text
+        news_list.append(
+            {
+                "title": title,
+                "author": author,
+                "url": url,
+                "comments": comments,
+                "points": points,
+            }
+        )
 
     return news_list
 
 
 def extract_next_page(parser):
-    """ Extract next page URL """
-    # PUT YOUR CODE HERE
+    next_page = parser.find("a", {"class": "morelink"})["href"]
+    print(next_page)
+    return next_page
 
 
 def get_news(url, n_pages=1):
-    """ Collect news from a given web page """
+    """Collect news from a given web page"""
     news = []
     while n_pages:
         print("Collecting data from page: {}".format(url))
@@ -29,4 +51,3 @@ def get_news(url, n_pages=1):
         news.extend(news_list)
         n_pages -= 1
     return news
-

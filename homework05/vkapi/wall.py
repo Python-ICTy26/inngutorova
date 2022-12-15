@@ -1,13 +1,13 @@
-import textwrap
+import math
 import time
 import typing as tp
 from string import Template
 
 import pandas as pd
+import requests
 from pandas import json_normalize
-
 from vkapi import config, session
-from vkapi.exceptions import APIError
+from vkapi.config import VK_CONFIG
 
 
 def get_posts_2500(
@@ -20,7 +20,25 @@ def get_posts_2500(
     extended: int = 0,
     fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
-    pass
+    code = """return API.wall.get({
+                       '"owner_id": "owner_id"',
+                       '"domain": "domain"',
+                       '"offset": offset',
+                       '"count": "1"',
+                       '"filter": "filter"',
+                       '"extended": extended',
+                       '"fields": "fields"',
+                       '"v": "v"'
+                       });"""
+    access_token = VK_CONFIG["access_token"]
+    version = VK_CONFIG["version"]
+    request_data = {
+        "access_token": access_token,
+        "v": version,
+        "code": code,
+    }
+    response = session.post("/execute", **request_data)
+    return response.json()["response"]["items"]
 
 
 def get_wall_execute(
@@ -49,4 +67,12 @@ def get_wall_execute(
     :param fields: Список дополнительных полей для профилей и сообществ, которые необходимо вернуть.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+    count = math.ceil(count / 2500)
+    response: tp.List[str] = []
+    for i in range(0, count):
+        response += get_posts_2500(
+            owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
+        )
+        if i % 2 == 0:
+            time.sleep(1)
+    return json_normalize(response)
