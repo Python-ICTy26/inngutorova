@@ -22,8 +22,7 @@ def news_list():
 def add_label():
     args = parse_qs(request.query_string)
     s = session()
-    s.query(News).filter(News.id == int(args["id"][0])).update({"label": str(args["label"][0])}
-    )
+    s.query(News).filter(News.id == int(args["id"][0])).update({"label": str(args["label"][0])})
     s.commit()
     redirect("/news")
 
@@ -34,7 +33,8 @@ def update_news():
     news = get_news("https://news.ycombinator.com/newest")
     for new in news:
         isin = len(
-            s.query(News).filter(News.author == new["author"], News.title == new["title"]).all())
+            s.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
+        )
         if not isin:
             s.add(
                 News(
